@@ -83,9 +83,10 @@ def get_path(starting_room):
     queue = []
     # queue.remove(cur_room.name)
     while len(visited) != total:
+        shortest_path = []
         dirs = cur_room.get_exits()
         open_dirs = []       
-        print(open_dirs)
+        # print(open_dirs)
         if cur_room.name not in visited:
             visited.append(cur_room.name)
         # check for every unvisited path
@@ -110,6 +111,10 @@ def get_path(starting_room):
             # print(shortest_path)
             if len(queue) > 0:
                 queue.remove(queue[-1])
+            else:
+                for r in rooms:
+                    if r not in visited:
+                        shortest_path = rg.bfs(cur_room.name, r)
             # print(queue)
             # travel until we get to destination
             # print(rg.vertices)
@@ -121,14 +126,14 @@ def get_path(starting_room):
                     # print([shortest_path[count], shortest_path[count + 1]])
                     spaths.append([shortest_path[count], shortest_path[count + 1]])
                     count += 1
-            print(spaths)
+            # print(spaths)
             # break
             spath_dirs = []
             for sp in spaths:
                 for c in connections:
                     if c[0] == sp[0] and c[1] == sp[1]:
                         spath_dirs.append(c[2])
-            print(spath_dirs)
+            # print(spath_dirs)
             for d in spath_dirs:
                 player.travel(d)
                 traversal_path.append(d)
